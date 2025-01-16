@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Proxy Example</title>
+</head>
+<body>
+    <h1>Proxy Test</h1>
+    <input type="text" id="urlInput" placeholder="Enter URL" value="https://www.example.com">
+    <button id="fetchButton">Fetch</button>
+    <pre id="output"></pre>
+
+    <script>
+        const glitchUrl = 'unique-delicate-thunbergia.glitch.me/'; // Replace with your Glitch URL
+        const urlInput = document.getElementById('urlInput');
+        const fetchButton = document.getElementById('fetchButton');
+        const output = document.getElementById('output');
+
+        fetchButton.addEventListener('click', async () => {
+            const targetUrl = urlInput.value;
+            const proxyUrl = `${glitchUrl}/proxy?url=${encodeURIComponent(targetUrl)}`;
+
+            try {
+                const response = await fetch(proxyUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.text();
+                output.textContent = data;
+            } catch (error) {
+                output.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
